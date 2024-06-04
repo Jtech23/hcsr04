@@ -1,0 +1,22 @@
+from hcsr04 import HCSR04
+from time import sleep
+from machine import Pin
+
+sensor = HCSR04(trigger_pin=15, echo_pin=14)
+led = Pin(10, Pin.OUT)
+led.value(0)
+
+while True:
+    distance = sensor.distance_cm()
+    print(f"Distance: {distance}cm")
+    if distance > 100:
+        print(distance)
+        led.on()
+        sleep(0.1)
+        print("Please move closer to the door")
+    else:
+        print(distance)
+        print("You can enter")
+        led.off()
+        sleep(0.1)
+    
